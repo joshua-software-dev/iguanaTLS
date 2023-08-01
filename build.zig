@@ -1,12 +1,19 @@
 const Builder = @import("std").build.Builder;
 
 pub fn build(b: *Builder) void {
+    const target = b.standardTargetOptions(.{});
     const optimize = b.standardOptimizeOption(.{});
+
+    _ = b.addModule(
+        "iguanaTLS",
+        .{ .source_file = .{ .path = "src/main.zig" } }
+    );
+
     const lib = b.addStaticLibrary(.{
         .name = "iguanaTLS",
         .root_source_file = .{ .path = "src/main.zig" },
         .optimize = optimize,
-        .target = .{},
+        .target = target,
     });
     b.installArtifact(lib);
 
